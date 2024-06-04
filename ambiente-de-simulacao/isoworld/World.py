@@ -3,14 +3,15 @@ from Config import Config
 
 class World:
     def __init__(self):
-        # self.terrain_map = [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
-        # self.height_map = [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
-        # self.object_map = [[[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)] for _ in range(Config.OBJECT_MAP_LEVELS)]
-        # self.agent_map = [[None] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
+        ...
+        self.terrain_map = [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
+        self.height_map = [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
+        self.object_map = [[[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)] for _ in range(Config.OBJECT_MAP_LEVELS)]
+        self.agent_map = [[None] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
         # self.tile_images = []
         # self.object_images = []
         # self.agent_images = []
-        self.initialize_world()
+        # self.initialize_world()
     
     def initialize_world(self):
         self.initialize_terrain()
@@ -25,7 +26,7 @@ class World:
             return
         for y in range(Config.WORLD_HEIGHT):
             for x in range(Config.WORLD_WIDTH):
-                self.terrain_map[y][x] = random.randint(0, len(self.tile_images) - 1)
+                self.terrain_map[y][x] = 0 #random.randint(0, len(self.tile_images) - 1)
 
     def initialize_objects(self):
         for y in range(0, Config.WORLD_HEIGHT, 5):
@@ -44,7 +45,13 @@ class World:
             for x in range(Config.VIEW_WIDTH):
                 tile_index = self.terrain_map[y][x]
                 tile_image = self.tile_images[tile_index]
-                screen.blit(tile_image, (x * tile_image.get_width(), y * tile_image.get_height()))
+
+                x_offset = 450
+                y_offset = 100
+                xScreen = x_offset + x * tile_image.get_width() / 2 - y * tile_image.get_width() / 2
+                yScreen = y_offset + y * tile_image.get_height() / 4 + x * tile_image.get_height() / 4
+
+                screen.blit(tile_image, (xScreen ,yScreen))
 
                 for level in range(Config.OBJECT_MAP_LEVELS):
                     obj_index = self.object_map[level][y][x]

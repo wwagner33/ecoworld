@@ -43,6 +43,7 @@ class Simulator:
         self.world.load_images(self.images.tile_images, self.images.object_images, self.images.agent_images)
         self.world.initialize_terrain()
         self.world.initialize_objects()
+        self.world.setup_environmental_factors()
 
     def main_loop(self):
         while True:

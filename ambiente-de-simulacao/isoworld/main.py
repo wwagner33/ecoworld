@@ -8,6 +8,6 @@ def main():
         print("Game interrupted by user.")
     finally:
         game_simulator.shutdown()
-
+        
 if __name__ == "__main__":
     main()

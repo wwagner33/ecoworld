@@ -1,5 +1,6 @@
 import pygame
 from Config import Config
+import os
 
 class ImageManager:
     def __init__(self):
@@ -34,7 +35,8 @@ class ImageManager:
 
     def load_image(self, path):
         try:
-            original_image = pygame.image.load(path).convert_alpha()
+            print(path)
+            original_image = pygame.image.load(os.path.join('', path)).convert_alpha()
             scaled_image = pygame.transform.scale(
                 original_image,
                 (int(original_image.get_width() * Config.SCALE_MULTIPLIER),
@@ -42,5 +44,7 @@ class ImageManager:
             )
             return scaled_image
         except Exception as e:
+            
             print(f"Error loading image {path}: {e}")
+            raise e
             return None
