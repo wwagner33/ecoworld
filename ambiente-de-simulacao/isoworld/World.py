@@ -29,11 +29,11 @@ class World:
     def initialize_objects(self):
         for y in range(0, Config.WORLD_HEIGHT, 5):
             for x in range(0, Config.WORLD_WIDTH, 5):
-                level = random.randint(0, Config.OBJECT_MAP_LEVELS - 1)
-                self.object_map[level][y][x] = random.randint(1, len(self.object_images) - 1)
+                level =  0 #random.randint(0, Config.OBJECT_MAP_LEVELS - 1)
+                self.object_map[level][y][x] = 1 #random.randint(1, len(self.object_images) - 1)
     
 
-    def update(self):
+    def update(self): 
         # Regular update method to handle game logic
         self.current_cycle += 1
         if self.current_cycle % self.update_weather_every_n_cycles == 0:
@@ -45,10 +45,13 @@ class World:
                 tile_index = self.terrain_map[y][x]
                 tile_image = self.tile_images[tile_index]
 
-                x_offset = 450
+                x_offset = 450 # Provavelmente devá ser passado para outro lugar
                 y_offset = 100
                 xScreen = x_offset + x * tile_image.get_width() / 2 - y * tile_image.get_width() / 2
                 yScreen = y_offset + y * tile_image.get_height() / 4 + x * tile_image.get_height() / 4
+
+                # if x == 3 :
+                #     yScreen -= 15
 
                 screen.blit(tile_image, (xScreen ,yScreen))
 
@@ -56,7 +59,10 @@ class World:
                     obj_index = self.object_map[level][y][x]
                     if obj_index > 0:
                         obj_image = self.object_images[obj_index]
-                        screen.blit(obj_image, (x * obj_image.get_width(), y * obj_image.get_height() - (level * 5)))
+
+                        xScreen = x_offset + x * obj_image.get_width() / 2 - y * obj_image.get_width() / 2
+                        yScreen = y_offset + y * obj_image.get_height() / 4 + x * obj_image.get_height() / 4
+                        screen.blit(obj_image, (xScreen, yScreen - (obj_image.get_height() / 2)* (level+1)))
 
                 agent = self.agent_map[y][x]
                 if agent:
