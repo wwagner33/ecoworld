@@ -1,8 +1,6 @@
 import random
 
-class Config:
-    WORLD_WIDTH = 32
-    WORLD_HEIGHT = 32
+from Config import Config
 
 class Agent:
     def __init__(self, x, y, image):

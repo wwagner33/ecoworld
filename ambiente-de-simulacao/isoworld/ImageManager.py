@@ -35,7 +35,7 @@ class ImageManager:
 
     def load_image(self, path):
         try:
-            print(path)
+            #print(path)
             original_image = pygame.image.load(os.path.join('', path)).convert_alpha()
             scaled_image = pygame.transform.scale(
                 original_image,
