@@ -7,6 +7,7 @@ class ImageManager:
         self.tile_images = []
         self.object_images = []
         self.agent_images = []
+        self.load_images()
 
     def load_images(self):
         # Define paths for different types of game assets

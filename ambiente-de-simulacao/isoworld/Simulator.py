@@ -3,6 +3,7 @@ import json
 import pygame
 from pygame.locals import *
 from ImageManager import ImageManager
+from PlayerAgent import PlayerAgent
 from World import World
 from Agent import Agent
 from Config import Config
@@ -11,15 +12,18 @@ from Config import Config
 class Simulator:
     def __init__(self, simulation_map:str=None):
         pygame.init()
+
         self.screen = pygame.display.set_mode((Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT), DOUBLEBUF)
         pygame.display.set_caption('Mundo dos Agentes')
-        self.clock = pygame.time.Clock()
         self.images = ImageManager()
-        self.agents = []
-        self.world = self._load_world(simulation_map)
+        self.clock = pygame.time.Clock()
+
+        self.player = PlayerAgent(x=0, y=0, image=self.images.object_images[2])
+        self.world = self._load_world(simulation_map, self.player)
+        self.agents = [self.player]
 
 
-    def _load_world(self, path: str):
+    def _load_world(self, path: str, player:Agent):
 
         # Pegar as inforações do mapa/ tamanho e dimensões, e quem sabe a visualização -> E atualiza as variaveis do Config.py
         # Coloca o mapa de alguma forma no World.py
@@ -45,7 +49,7 @@ class Simulator:
          
 
         
-        return World(map)
+        return World(map, player)
 
 
     def run(self):
@@ -88,6 +92,14 @@ class Simulator:
                 elif event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         self.shutdown()
+                    elif event.key == pygame.K_w:
+                        self.player.move(0,-1)
+                    elif event.key == pygame.K_s:
+                        self.player.move(0,1)
+                    elif event.key == pygame.K_a:
+                        self.player.move(-1,0)
+                    elif event.key == pygame.K_d:
+                        self.player.move(1,0)
 
             self.update_game_state()
             self.render_game()
@@ -105,7 +117,8 @@ class Simulator:
         self.screen.fill((0, 0, 0))
         self.world.render(self.screen)
         for agent in self.agents:
-            agent.render(self.screen)
+            ...
+            # TODO Teste agent.render(self.screen)
 
 
     def shutdown(self):

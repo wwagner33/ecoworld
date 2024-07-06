@@ -3,12 +3,13 @@ from Agent import Agent
 from Config import Config
 
 class World:
-    def __init__(self, map=None):
+    def __init__(self, map=None, player_agent: Agent=None):
         self.map = map # Colocar as deais condições para a simulação?
         self.terrain_map = [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)] # Legal
         self.height_map = map["height"] or [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
         self.object_map = [[[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)] for _ in range(Config.OBJECT_MAP_LEVELS)]
         self.agent_map = [[None] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
+        self.player = player_agent
 
     
     def initialize_world(self):
@@ -42,33 +43,39 @@ class World:
 
 
     def render(self, screen):
+        tile_wid = self.tile_images[1].get_width()
+        tile_hei = self.tile_images[1].get_height()
+
         for y in range(Config.VIEW_HEIGHT):
             for x in range(Config.VIEW_WIDTH):
                 tile_index = self.terrain_map[y][x]
                 tile_image = self.tile_images[tile_index]
 
                 x_offset = 450 # Provavelmente devá ser passado para outro lugar
-                y_offset = 100
-                xScreen = x_offset + x * tile_image.get_width() / 2 - y * tile_image.get_width() / 2
-                yScreen = y_offset + y * tile_image.get_height() / 4 + x * tile_image.get_height() / 4
+                y_offset = 150
+                xScreen = x_offset + x * tile_wid / 2 - y * tile_wid / 2
+                yScreen = y_offset + y * tile_hei / 4 + x * tile_hei / 4
 
                 # if x == 3 :
                 #     yScreen -= 15
 
-                screen.blit(tile_image, (xScreen ,yScreen - (tile_image.get_height() / 2)* (self.height_map[y][x])))
+                screen.blit(tile_image, (xScreen ,yScreen - (tile_hei / 2)* (self.height_map[y][x])))
 
                 for level in range(Config.OBJECT_MAP_LEVELS):
                     obj_index = self.object_map[level][y][x]
                     if obj_index > 0:
                         obj_image = self.object_images[obj_index]
 
-                        xScreen = x_offset + x * obj_image.get_width() / 2 - y * obj_image.get_width() / 2
-                        yScreen = y_offset + y * obj_image.get_height() / 4 + x * obj_image.get_height() / 4
-                        screen.blit(obj_image, (xScreen, yScreen - (obj_image.get_height() / 2)* (level+1)))
+                        xScreen = x_offset + x * tile_wid / 2 - y * tile_wid / 2
+                        yScreen = y_offset + y * tile_hei / 4 + x * tile_hei / 4
+                        screen.blit(obj_image, (xScreen, yScreen - (tile_hei / 2)* (level+1)))
 
-                agent = self.agent_map[y][x]
-                if agent:
-                    screen.blit(agent.image, (agent.x * agent.image.get_width(), agent.y * agent.image.get_height()))
+        
+        player_x_Screen = x_offset + self.player.x * tile_wid / 2 - self.player.y * tile_wid / 2 # Depois subistituir quando a imagem do player for 55/64
+        player_y_Screen = y_offset + self.player.y * tile_hei / 4 + self.player.x * tile_hei / 4 
+        player_nivel = self.height_map[self.player.x][self.player.y]
+        
+        screen.blit(self.player.image, (player_x_Screen, player_y_Screen - (tile_hei / 2) * (player_nivel + 1)))
 
 
     def load_images(self, tile_images, object_images, agent_images):
