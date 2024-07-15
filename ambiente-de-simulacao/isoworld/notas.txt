@@ -1,0 +1,12 @@
+- Objetos (classes) - Ecoloids
+
+Árvores
+Fontes de Água
+Construções Simples
+Consturções Complexas
+Plantação de Soja
+Fonte de Mineração Urânio
+Fonte de Energia Eólica
+
+
+inserir os objetos com clique do botão e seleção do objeto
