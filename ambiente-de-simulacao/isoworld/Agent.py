@@ -1,7 +1,8 @@
 import random
-
 from Config import Config
 
+
+"""Classe responsável pelo Agentes no mundo"""
 class Agent:
     def __init__(self, x, y, image=None):
         self.x = x

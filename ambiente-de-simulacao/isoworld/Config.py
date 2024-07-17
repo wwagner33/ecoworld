@@ -1,4 +1,4 @@
-class Config:
+class Config: # TODo Talvez seja subistituido por um .json
     SCREEN_WIDTH = 930
     SCREEN_HEIGHT = 640
     WORLD_WIDTH = 10

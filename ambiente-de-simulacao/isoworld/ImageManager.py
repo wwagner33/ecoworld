@@ -2,6 +2,8 @@ import pygame
 from Config import Config
 import os
 
+
+"""Classe responsável pelo gerenciamento de imagens"""
 class ImageManager:
     def __init__(self):
         self.tile_images = []

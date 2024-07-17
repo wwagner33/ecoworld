@@ -1,7 +1,7 @@
 
 from Agent import Agent
 
-
+"""Agende controlavel pelo usuário"""
 class PlayerAgent(Agent):
     def __init__(self, x, y, image=None):
         super().__init__( x, y, image)

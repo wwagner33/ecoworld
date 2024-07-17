@@ -2,6 +2,8 @@ import random
 from Agent import Agent
 from Config import Config
 
+
+"""Ficará Responsavel por 'Redenrizar' os elementos"""
 class World:
     def __init__(self, map=None, player_agent: Agent=None):
         self.map = map # Colocar as deais condições para a simulação?
@@ -34,7 +36,7 @@ class World:
                 level =  0 #random.randint(0, Config.OBJECT_MAP_LEVELS - 1)
                 self.object_map[level][y][x] = random.randint(1, len(self.object_images) - 1)
     
-
+    # TODO
     def update(self): 
         # Regular update method to handle game logic
         self.current_cycle += 1
@@ -42,6 +44,7 @@ class World:
             self.change_weather()
 
 
+    """Função que redencia as imagens dentro da tela{screen}"""
     def render(self, screen):
         tile_wid = self.tile_images[1].get_width()
         tile_hei = self.tile_images[1].get_height()
@@ -51,13 +54,12 @@ class World:
                 tile_index = self.terrain_map[y][x]
                 tile_image = self.tile_images[tile_index]
 
-                x_offset = 450 # Provavelmente devá ser passado para outro lugar
+                x_offset = 450 # TODO Provavelmente devá ser passado para outro lugar
                 y_offset = 150
                 xScreen = x_offset + x * tile_wid / 2 - y * tile_wid / 2
                 yScreen = y_offset + y * tile_hei / 4 + x * tile_hei / 4
 
-                # if x == 3 :
-                #     yScreen -= 15
+                # TODO Colocar em algum lugar a informação -> Para elevar algum elemento tudo que é necessário é diminuir seu valor de y
 
                 screen.blit(tile_image, (xScreen ,yScreen - (tile_hei / 2)* (self.height_map[y][x])))
 
@@ -84,6 +86,7 @@ class World:
         self.agent_images = agent_images
 
 
+    """inicializa os agentes no Mundo"""
     def initialize_agents(self):
         # Example: Place agents at strategic locations or random positions
         starting_positions = [(10, 10), (20, 20), (30, 30)]  # Preset or generated positions
@@ -92,6 +95,7 @@ class World:
             self.agent_map[pos[1]][pos[0]] = agent  # Assuming self.agent_map stores agent references
 
 
+    #TODO
     def setup_environmental_factors(self):
         # Example: Initialize weather, lighting, or other environmental factors
         self.weather = "Sunny"  # Default weather
@@ -104,7 +108,7 @@ class World:
         import random
         return random.choice(self.agent_images)
 
-
+    #TODO
     def change_weather(self):
         # Example method to change weather conditions randomly
         import random

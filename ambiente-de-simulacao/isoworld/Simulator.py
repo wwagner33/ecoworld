@@ -8,7 +8,7 @@ from World import World
 from Agent import Agent
 from Config import Config
 
-
+"""Classe responsável pelas mecânicas de cada simulação"""
 class Simulator:
     def __init__(self, simulation_map:str=None):
         pygame.init()
