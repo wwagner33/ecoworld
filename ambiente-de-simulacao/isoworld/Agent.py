@@ -1,4 +1,6 @@
 import random
+
+import pygame
 from Config import Config
 
 

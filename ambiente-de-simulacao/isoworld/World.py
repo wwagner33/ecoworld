@@ -1,4 +1,6 @@
 import random
+
+import pygame
 from Agent import Agent
 from Config import Config
 
@@ -12,6 +14,11 @@ class World:
         self.object_map = [[[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)] for _ in range(Config.OBJECT_MAP_LEVELS)]
         self.agent_map = [[None] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
         self.player = player_agent
+        # TODO Depois Colocar em um lugar melhor
+        self.x_offset = 450
+        self.y_offset = 150
+        self.tile_wid = None
+        self.tile_hei = None
 
     
     def initialize_world(self):
@@ -46,39 +53,50 @@ class World:
 
     """Função que redencia as imagens dentro da tela{screen}"""
     def render(self, screen):
-        tile_wid = self.tile_images[1].get_width()
-        tile_hei = self.tile_images[1].get_height()
+        self.tile_wid = self.tile_images[1].get_width()
+        self.tile_hei = self.tile_images[1].get_height()
 
         for y in range(Config.VIEW_HEIGHT):
             for x in range(Config.VIEW_WIDTH):
                 tile_index = self.terrain_map[y][x]
                 tile_image = self.tile_images[tile_index]
-
-                x_offset = 450 # TODO Provavelmente devá ser passado para outro lugar
-                y_offset = 150
-                xScreen = x_offset + x * tile_wid / 2 - y * tile_wid / 2
-                yScreen = y_offset + y * tile_hei / 4 + x * tile_hei / 4
+                xScreen, yScreen = self.__posicionar_na_grid(x,y,self.height_map[y][x])  # Subistituir esses xyScreen?
 
                 # TODO Colocar em algum lugar a informação -> Para elevar algum elemento tudo que é necessário é diminuir seu valor de y
 
-                screen.blit(tile_image, (xScreen ,yScreen - (tile_hei / 2)* (self.height_map[y][x])))
+                screen.blit(tile_image, (xScreen ,yScreen))
 
                 for level in range(Config.OBJECT_MAP_LEVELS):
                     obj_index = self.object_map[level][y][x]
                     if obj_index > 0:
                         obj_image = self.object_images[obj_index]
 
-                        xScreen = x_offset + x * tile_wid / 2 - y * tile_wid / 2
-                        yScreen = y_offset + y * tile_hei / 4 + x * tile_hei / 4
-                        screen.blit(obj_image, (xScreen, yScreen - (tile_hei / 2)* (level+1)))
+                        xScreen, yScreen = self.__posicionar_na_grid(x,y,level + 1)
+                        screen.blit(obj_image, (xScreen, yScreen))
 
-        
-        player_x_Screen = x_offset + self.player.x * tile_wid / 2 - self.player.y * tile_wid / 2 # Depois subistituir quando a imagem do player for 55/64
-        player_y_Screen = y_offset + self.player.y * tile_hei / 4 + self.player.x * tile_hei / 4 
-        player_nivel = self.height_map[self.player.x][self.player.y]
-        
-        screen.blit(self.player.image, (player_x_Screen, player_y_Screen - (tile_hei / 2) * (player_nivel + 1)))
 
+
+        # Lógica de redenrização do Player
+
+        player_nivel = self.height_map[self.player.x][self.player.y] + 1
+        player_x_Screen, player_y_Screen = self.__posicionar_na_grid(self.player.x,self.player.y,player_nivel)
+        
+        screen.blit(self.player.image, (player_x_Screen, player_y_Screen))
+        pygame.draw.circle(screen, 255, self.__centraliza_tile((player_x_Screen, player_y_Screen), (self.tile_wid, self.tile_hei)) , 10,2)
+
+
+    # TODO Substituir de lugar
+    def __centraliza_tile(self, object_pos, tile_sizes ) -> tuple:
+        x, y = object_pos
+        w, h = tile_sizes
+        return (x + w / 2, y + h / 2)
+    
+
+    def __posicionar_na_grid(self, x, y, height) ->tuple[tuple]:
+        xScreen, yScreen = ((self.x_offset + x * self.tile_wid / 2 - y * self.tile_wid / 2), \
+                             (self.y_offset + y * self.tile_hei / 4 + x * self.tile_hei / 4 - (self.tile_hei / 2) * (height + 1)))
+        return (xScreen, yScreen)
+        
 
     def load_images(self, tile_images, object_images, agent_images):
         self.tile_images = tile_images
