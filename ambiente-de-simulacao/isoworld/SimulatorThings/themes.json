@@ -1,0 +1,10 @@
+{
+    "defaults":
+    {
+        "colours":
+        {
+           "normal_bg":"#45494e,#65696e,90",
+           "hovered_bg":"rgb(30, 40, 60),#f3f,rgb(50, 60, 70),90deg"
+        }
+    }
+}
