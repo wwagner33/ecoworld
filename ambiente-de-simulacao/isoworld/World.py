@@ -16,7 +16,7 @@ class World:
         self.player = player_agent
         # TODO Depois Colocar em um lugar melhor
         self.x_offset = 450
-        self.y_offset = 150
+        self.y_offset = 200
         self.tile_wid = None
         self.tile_hei = None
 
@@ -74,10 +74,7 @@ class World:
                         xScreen, yScreen = self.__posicionar_na_grid(x,y,level + 1)
                         screen.blit(obj_image, (xScreen, yScreen))
 
-
-
         # Lógica de redenrização do Player
-
         player_nivel = self.height_map[self.player.x][self.player.y] + 1
         player_x_Screen, player_y_Screen = self.__posicionar_na_grid(self.player.x,self.player.y,player_nivel)
         
