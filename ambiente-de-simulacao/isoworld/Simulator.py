@@ -6,6 +6,7 @@ from pygame.locals import *
 from ImageManager import ImageManager
 from PlayerAgent import PlayerAgent
 from SimulatorThings.Gui import Gui
+from SimulatorThings.map_maker_gui import MapMakerGui
 from World import World
 from Agent import Agent
 from Config import Config
@@ -19,7 +20,7 @@ class Simulator:
         pygame.display.set_caption('Mundo dos Agentes')
         self.images = ImageManager()
         self.clock = pygame.time.Clock()
-        self.gui = Gui(self.screen, self.images.tile_images)
+        self.gui = MapMakerGui(self.screen, self.images.tile_images)
         self.player = PlayerAgent(x=0, y=0, image=self.images.object_images[2])
         self.world = self._load_world(simulation_map, self.player)
         self.agents = [self.player]
