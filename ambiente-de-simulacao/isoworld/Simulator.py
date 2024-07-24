@@ -103,6 +103,15 @@ class Simulator:
                         self.player.move(-1,0)
                     elif event.key == pygame.K_d:
                         self.player.move(1,0)
+                
+                
+                # Gui parte por enquanto
+                if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                    if 'mouse_changer' in event.ui_object_id :
+                        self.gui.send_event(event)
+                        
+                        
+                        
                 self.gui.manager.process_events(event)
 
 
