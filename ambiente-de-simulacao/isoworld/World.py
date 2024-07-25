@@ -74,10 +74,11 @@ class World:
                         xScreen, yScreen = self.__posicionar_na_grid(x,y,level + 1)
                         screen.blit(obj_image, (xScreen, yScreen))
 
+
         # Lógica de redenrização do Player
         player_nivel = self.height_map[self.player.x][self.player.y] + 1
         player_x_Screen, player_y_Screen = self.__posicionar_na_grid(self.player.x,self.player.y,player_nivel)
-        
+
         screen.blit(self.player.image, (player_x_Screen, player_y_Screen))
         pygame.draw.circle(screen, 255, self.__centraliza_tile((player_x_Screen, player_y_Screen), (self.tile_wid, self.tile_hei)) , 10,2)
 
@@ -89,11 +90,15 @@ class World:
         return (x + w / 2, y + h / 2)
     
 
-    def __posicionar_na_grid(self, x, y, height) ->tuple[tuple]:
+    def __posicionar_na_grid(self, x, y, height) -> tuple[tuple]:
         xScreen, yScreen = ((self.x_offset + x * self.tile_wid / 2 - y * self.tile_wid / 2), \
                              (self.y_offset + y * self.tile_hei / 4 + x * self.tile_hei / 4 - (self.tile_hei / 2) * (height + 1)))
         return (xScreen, yScreen)
-        
+    
+    # FAzer um um novo modo que vai ser só pra editar, com grid plana, e numeros para a altura
+    
+    # def __
+    # """ Pega o x e y  """    
 
     def load_images(self, tile_images, object_images, agent_images):
         self.tile_images = tile_images
