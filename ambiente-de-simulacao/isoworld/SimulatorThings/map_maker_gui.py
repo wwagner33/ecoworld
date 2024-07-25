@@ -13,6 +13,8 @@ class MapMakerGui(Gui):
         super().__init__(screen=screen)
         self.painel = UIPanel(relative_rect=pygame.Rect((0, 0),(200, 640)), manager=self.manager)
         self.tiles_images = images
+        self.mouse_editing = False
+        self.mouse_image = None
         # self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, 0), (100, 50)),
         #                                      text='Say Hello',
         #                                      manager=self.manager,
@@ -41,7 +43,8 @@ class MapMakerGui(Gui):
         if active:
             pos = pygame.mouse.get_pos()
             pygame.mouse.set_visible(False)
-            self.screen.blit(image, (300, 10)) #Todo Talvez estejá aqui a razão de não desenhar o mouse
+            self.mouse_editing = True
+            self.mouse_image = image
             
         else:
             pygame.mouse.set_visible(True)
@@ -50,23 +53,18 @@ class MapMakerGui(Gui):
     
     def send_event(self, event):
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
-            if 'mouse_changer' in str(event.ui_object_id) :
+            if 'mouse_changer' in str(event.ui_object_id):
                 id = event.ui_object_id[-1]
                 self.__change_mouse_curser(self.__get_image_by_id(id),True)
     
     
     def render(self,delta_time):
         super().render(delta_time)
-        
-        # Lidando com eventos
-        #TODO Depois resolver
-        # for event in pygame.event.get():
-        #     if event.type == pygame_gui.UI_BUTTON_PRESSED:
-        #         print(str(event.ui_object_id[5]))
-        #         if 'mouse_changer' in str(event.ui_object_id) :
-        #             print('Hello World!')
-        
-        #     self.manager.process_events(event)
+        pos = pygame.mouse.get_pos()
+        if self.mouse_editing:
+            self.screen.blit(self.mouse_image, pos)
+
+
     
             
 
@@ -85,7 +83,4 @@ class TilesetOption:
                                                     image_surface=image, container=container)
             
             
-            
-            
-            
-        
+   
