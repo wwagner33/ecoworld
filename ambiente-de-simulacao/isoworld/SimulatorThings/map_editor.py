@@ -21,7 +21,7 @@ class MapMaker:
         self.__testes()
         self.clock = py.time.Clock()
         self.blockSize = 80
-        self.gridmap = self.create_grid_tile(self.map, self.blockSize)
+        self.gridmap: list[list[EditiongTile]] = self.create_grid_tile(self.map, self.blockSize)
 
         self.gui = MapMakerGui(self.screen, self.images.tile_images)
         self.selected_tile = None
@@ -95,6 +95,28 @@ class MapMaker:
             for event in py.event.get():
                 if event.type == QUIT:
                     self.shutdown()
+                
+                elif event.type == py.MOUSEBUTTONUP:
+                    pos = py.mouse.get_pos()
+                    # print(pos)
+                    # Depois mudar essa solução
+
+                    if self.map:
+                        w = len(self.map[0])
+                        h = len(self.map)
+                    else:
+                        w = (Config.SCREEN_WIDTH-200) // self.blockSize
+                        h = Config.SCREEN_HEIGHT // self.blockSize
+
+                    for x in range(0, w): 
+                        for y in range(0, h):
+                            if self.gridmap[x][y].has_been_clicked(pos):
+                                # print(x,y)
+                                if (self.selected_tile):
+                                    self.gridmap[x][y].change_tile(int(self.selected_tile))
+
+
+
                 elif event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         self.shutdown()

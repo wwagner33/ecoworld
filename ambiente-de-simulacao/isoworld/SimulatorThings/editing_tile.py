@@ -35,4 +35,11 @@ class EditiongTile:
         self.type = tile
 
 
+    def has_been_clicked(self, pos):
+        gui_painel_width = 200 # Maybe replace after
+        x, y = pos
+
+        return self.x* self.size + gui_painel_width <= x and x < self.x * self.size + gui_painel_width + self.size  and \
+                self.y* self.size <= y and y < self.y  * self.size + self.size
+            
 
