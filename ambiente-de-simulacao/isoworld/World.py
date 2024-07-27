@@ -44,11 +44,11 @@ class World:
                 self.object_map[level][y][x] = random.randint(1, len(self.object_images) - 1)
     
     # TODO
-    def update(self): 
-        # Regular update method to handle game logic
-        self.current_cycle += 1
-        if self.current_cycle % self.update_weather_every_n_cycles == 0:
-            self.change_weather()
+    # def update(self): 
+    #     # Regular update method to handle game logic
+    #     self.current_cycle += 1
+    #     if self.current_cycle % self.update_weather_every_n_cycles == 0:
+    #         self.change_weather()
 
 
     """Função que redencia as imagens dentro da tela{screen}"""
@@ -129,9 +129,9 @@ class World:
         return random.choice(self.agent_images)
 
     #TODO
-    def change_weather(self):
-        # Example method to change weather conditions randomly
-        import random
-        weather_conditions = ["Sunny", "Rainy", "Cloudy", "Stormy"]
-        self.weather = random.choice(weather_conditions)
-        print(f"Weather changed to: {self.weather}")    
+    # def change_weather(self):
+    #     # Example method to change weather conditions randomly
+    #     import random
+    #     weather_conditions = ["Sunny", "Rainy", "Cloudy", "Stormy"]
+    #     self.weather = random.choice(weather_conditions)
+    #     print(f"Weather changed to: {self.weather}")    

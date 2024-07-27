@@ -1,9 +1,12 @@
 from Simulator import Simulator
+from SimulatorThings.map_editor import MapMaker
 
 def main():
-    game_simulator = Simulator("simulation00.json")
+    # game_simulator = Simulator("simulation00.json")
+    map_editor = MapMaker()
     try:
-        game_simulator.run()
+        map_editor.run()
+        # game_simulator.run()
     except KeyboardInterrupt:
         print("Game interrupted by user.")
     # except Exception as err:

@@ -38,7 +38,7 @@ class ImageManager:
 
     def load_image(self, path):
         try:
-            #print(path)
+            # print(os.path.join('', path))
             original_image = pygame.image.load(os.path.join('', path)).convert_alpha()
             scaled_image = pygame.transform.scale(
                 original_image,
@@ -50,4 +50,3 @@ class ImageManager:
             
             print(f"Error loading image {path}: {e}")
             raise e
-            return None
