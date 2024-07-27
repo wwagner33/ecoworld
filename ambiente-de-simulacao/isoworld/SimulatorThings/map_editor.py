@@ -1,28 +1,37 @@
 import sys
-import json
 import pygame as py
 import pygame_gui
 from pygame.locals import *
 from ImageManager import ImageManager
-from PlayerAgent import PlayerAgent
-from SimulatorThings.Gui import Gui
+from SimulatorThings.editing_tile import EditiongTile
 from SimulatorThings.map_maker_gui import MapMakerGui
-from World import World
-from Agent import Agent
 from Config import Config
 
 class MapMaker:
 
-    def __init__(self, map=None) -> None:
+    def __init__(self, map=None) -> None: # Depois colocar um botão que troca a edição de terreno pra edição de estrutura
         """ Inicializa o Editor """
         py.init()
+        # py.font.init() 
+        self.my_font = py.font.SysFont('Comic Sans MS', 30)
         self.screen = py.display.set_mode((Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT), DOUBLEBUF)
         self.images = ImageManager()
         py.display.set_caption('Criador de mapas interface')
+        self.map: list[list] = map or [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
+        self.__testes()
         self.clock = py.time.Clock()
-        self.map = map
+        self.blockSize = 80
+        self.gridmap = self.create_grid_tile(self.map, self.blockSize)
+
         self.gui = MapMakerGui(self.screen, self.images.tile_images)
-    
+        self.selected_tile = None
+
+
+    def __testes(self):
+        for i, tile in enumerate(self.map):
+            self.map[0][i] = 1
+            self.map[i][0] = 1
+
 
     def _load_map(self):
         ...
@@ -36,16 +45,42 @@ class MapMaker:
 
     def render_editor(self):
         self.screen.fill((0, 0, 0))
-        self.drawGrid()
+        self.drawGrid(self.map)
     
 
-    def drawGrid(self):
-        blockSize = int(60 * Config.SCALE_MULTIPLIER)  #Set the size of the grid block
-        for x in range(0, Config.SCREEN_WIDTH, blockSize):
-            for y in range(0, Config.SCREEN_HEIGHT, blockSize):
-                rect = py.Rect(x, y, blockSize, blockSize)
-                py.draw.rect(self.screen, (py.Color(100, 100, 100, a=20)), rect, 1)
+    def create_grid_tile(self, map=None, blockSize=80):
+        blockSize = int(self.blockSize * Config.SCALE_MULTIPLIER)  # Set the size of the grid block
+
+        if map:
+            w = len(map[0])
+            h = len(map)
+        else:
+            w = (Config.SCREEN_WIDTH-200) // blockSize
+            h = Config.SCREEN_HEIGHT // blockSize
+
+        gridm = [[0] * w for _ in range(h)]
         
+        for x in range(0, w): 
+            for y in range(0, h):
+                gridm[x][y] = EditiongTile(x,y,blockSize,self.screen, map[x][y])
+                # self.__draw_tile(x, y)
+
+        return gridm
+
+    
+    def drawGrid(self,map =None):
+        blockSize = int(self.blockSize * Config.SCALE_MULTIPLIER)  # Set the size of the grid block
+        if map:
+            w = len(map[0])
+            h = len(map)
+        else:
+            w = (Config.SCREEN_WIDTH-200) // blockSize
+            h = Config.SCREEN_HEIGHT // blockSize
+
+        for x in range(0, w): 
+            for y in range(0, h):
+                self.gridmap[x][y].render()
+
 
     def load_all_images(self):
         self.images.load_images()
@@ -77,7 +112,9 @@ class MapMaker:
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
                     if 'mouse_changer' in event.ui_object_id :
                         self.gui.send_event(event)
-                        
+                        self.selected_tile = event.ui_object_id[-1]
+                    else:
+                        self.selected_tile = None
                         
                         
                 self.gui.manager.process_events(event)
