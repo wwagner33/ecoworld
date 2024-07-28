@@ -17,7 +17,8 @@ class EditiongTile:
         rect = py.Rect(self.x *self.size + gui_painel_width, self.y*self.size, self.size, self.size)
         # color = (0,0,0)
         
-
+        if (self.x, self.y) == (0,0):
+            print(self.type)
         if self.__is_mouse_inside():
             color = (100,100,100)
         else:
@@ -27,7 +28,8 @@ class EditiongTile:
 
 
         if self.type is None:
-            color = (100, 100, 100)
+            color = self.__sum_tuples(color, (100, 100, 100))
+            print('q')
             py.draw.rect(self.screen, color, rect, 1)
             py.draw.circle(self.screen, color, (self.x *self.size + gui_painel_width + self.size/2, self.y*self.size+ self.size/2), 5, 5)
 
@@ -57,7 +59,6 @@ class EditiongTile:
 
 
     def __sum_tuples(self, tuples1, tuples2):
-        print(map(lambda x, y: x + y, tuples1, tuples2))
         return tuple(map(lambda x, y: x + y, tuples1, tuples2))
 
 

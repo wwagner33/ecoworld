@@ -33,6 +33,7 @@ class MapMakerGui(Gui):
                 temp_x = 10
               
             self.tileset.append(TilesetOption(self.manager ,temp_x,temp_y,tile,self.painel, i))
+        self.tileset.append(TilesetOption(self.manager ,5, 600, tile, self.painel, None))
     
     
     def __get_image_by_id(self, id):
@@ -45,15 +46,19 @@ class MapMakerGui(Gui):
             pygame.mouse.set_visible(False)
             self.mouse_editing = True
             self.mouse_image = image
-            
         else:
             pygame.mouse.set_visible(True)
+            self.mouse_editing = False
+            self.mouse_image = None
             return
     
     
     def send_event(self, event):
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
             if 'mouse_changer' in str(event.ui_object_id):
+                if event.ui_object_id[-1] == 'R':
+                    self.__change_mouse_curser(None, False)
+                    return
                 id = event.ui_object_id[-1]
                 self.__change_mouse_curser(self.__get_image_by_id(id),True)
     
@@ -65,22 +70,27 @@ class MapMakerGui(Gui):
             self.screen.blit(self.mouse_image, pos)
 
 
-    
-            
-
 
 class TilesetOption:
     def __init__(self, manager, x, y, image, container, id) -> None:
-        self.image = image
-        self.uibutton = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((x-3, y-3), (60, 70)),
-                                             text='',
+        if id is None:
+            self.uibutton = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((x-3, y-3), (100, 50)),
+                                             text='Apagar',
                                              container=container,
-                                             object_id=ObjectID(f'#mouse_changer_{id}'),
+                                             object_id=ObjectID(f'#mouse_changer_R'),
                                              manager= manager
                                              )
-        self.ui_tile_image= UIImage(relative_rect=pygame.Rect((x, y),
-                                                    (55, 64)), 
-                                                    image_surface=image, container=container)
-            
+        else:
+            self.image = image
+            self.uibutton = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((x-3, y-3), (60, 70)),
+                                                text='',
+                                                container=container,
+                                                object_id=ObjectID(f'#mouse_changer_{id}'),
+                                                manager= manager
+                                                )
+            self.ui_tile_image= UIImage(relative_rect=pygame.Rect((x, y),
+                                                        (55, 64)), 
+                                                        image_surface=image, container=container)
+                
             
    
