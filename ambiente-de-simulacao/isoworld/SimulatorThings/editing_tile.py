@@ -1,4 +1,3 @@
-
 import pygame as py
 
 
@@ -15,23 +14,17 @@ class EditiongTile:
     def render(self):
         gui_painel_width = 200 # Maybe replace after
         rect = py.Rect(self.x *self.size + gui_painel_width, self.y*self.size, self.size, self.size)
-        # color = (0,0,0)
         
-        if (self.x, self.y) == (0,0):
-            print(self.type)
         if self.__is_mouse_inside():
             color = (100,100,100)
         else:
             color = (0,0,0)
-            
-
 
 
         if self.type is None:
             color = self.__sum_tuples(color, (100, 100, 100))
-            print('q')
-            py.draw.rect(self.screen, color, rect, 1)
-            py.draw.circle(self.screen, color, (self.x *self.size + gui_painel_width + self.size/2, self.y*self.size+ self.size/2), 5, 5)
+            self.__draw_tile(color, rect)
+
 
         elif self.type == 0:
             color = self.__sum_tuples(color, (0, 150, 0))
@@ -48,14 +41,15 @@ class EditiongTile:
         elif self.type == 3:
             color = self.__sum_tuples(color, (0, 150, 150))
             self.__draw_tile(color, rect)
-            
-            # py.draw.circle(self.screen, (py.Color(100, 100, 100)), (x *blockSize + gui_painel_width + blockSize/2, y*blockSize+ blockSize/2), 5, 5)
 
     
     def __draw_tile(self, color, rect):
         gui_painel_width = 200 # Maybe replace after
         py.draw.rect(self.screen, color, rect, 1)
-        self.screen.blit(self.my_font.render(str(self.type), False, color), (self.x *self.size + gui_painel_width + self.size/2-5, self.y*self.size+15))
+        if self.type is None:
+            py.draw.circle(self.screen, color, (self.x *self.size + gui_painel_width + self.size/2, self.y*self.size+ self.size/2), 5, 5)
+        else:
+            self.screen.blit(self.my_font.render(str(self.type), False, color), (self.x *self.size + gui_painel_width + self.size/2-5, self.y*self.size+15))
 
 
     def __sum_tuples(self, tuples1, tuples2):
@@ -71,13 +65,10 @@ class EditiongTile:
         return self.has_been_clicked(py.mouse.get_pos())
 
 
-    def has_been_clicked(self, pos): # talvez trocar o nome
+    def has_been_clicked(self, pos): 
         gui_painel_width = 200 # Maybe replace after
         x, y = pos
 
         return self.x* self.size + gui_painel_width <= x and x < self.x * self.size + gui_painel_width + self.size  and \
                 self.y* self.size <= y and y < self.y  * self.size + self.size
     
-
-
-

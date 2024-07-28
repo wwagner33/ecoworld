@@ -15,14 +15,6 @@ class MapMakerGui(Gui):
         self.tiles_images = images
         self.mouse_editing = False
         self.mouse_image = None
-        # self.hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, 0), (100, 50)),
-        #                                      text='Say Hello',
-        #                                      manager=self.manager,
-        #                                      container=self.painel,
-        #                                      object_id=ObjectID(class_id='@painel')
-        #                                      )
-        # self.imagem = pygame_gui.elements.ui_image.UIImage(relative_rect=pygame.Rect((10, 10),(55, 64)), 
-        #                                                    image_surface=self.tiles_images[0], container=self.painel)
         self.tileset = []
         temp_x = 10
         temp_y = 10
@@ -42,7 +34,6 @@ class MapMakerGui(Gui):
     
     def __change_mouse_curser(self, image, active):
         if active:
-            pos = pygame.mouse.get_pos()
             pygame.mouse.set_visible(False)
             self.mouse_editing = True
             self.mouse_image = image
@@ -90,7 +81,6 @@ class TilesetOption:
                                                 )
             self.ui_tile_image= UIImage(relative_rect=pygame.Rect((x, y),
                                                         (55, 64)), 
-                                                        image_surface=image, container=container)
-                
+                                                        image_surface=image, container=container)         
             
    

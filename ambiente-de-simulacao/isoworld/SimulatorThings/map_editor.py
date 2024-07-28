@@ -18,19 +18,12 @@ class MapMaker:
         self.images = ImageManager()
         py.display.set_caption('Criador de mapas interface')
         self.map: list[list] = map or [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
-        self.__testes()
         self.clock = py.time.Clock()
         self.blockSize = 80
         self.gridmap: list[list[EditiongTile]] = self.create_grid_tile(self.map, self.blockSize)
 
         self.gui = MapMakerGui(self.screen, self.images.tile_images)
         self.selected_tile = None
-
-
-    def __testes(self):
-        for i, tile in enumerate(self.map):
-            self.map[0][i] = 1
-            self.map[i][0] = 1
 
 
     def _load_map(self):
@@ -63,12 +56,11 @@ class MapMaker:
         for x in range(0, w): 
             for y in range(0, h):
                 gridm[x][y] = EditiongTile(x,y,blockSize,self.screen, map[x][y])
-                # self.__draw_tile(x, y)
 
         return gridm
 
     
-    def drawGrid(self,map =None):
+    def drawGrid(self,map =None): # TODO Simplificar e refatorar
         blockSize = int(self.blockSize * Config.SCALE_MULTIPLIER)  # Set the size of the grid block
         if map:
             w = len(map[0])
@@ -98,10 +90,8 @@ class MapMaker:
                 
                 elif event.type == py.MOUSEBUTTONUP:
                     pos = py.mouse.get_pos()
-                    # print(pos)
-                    # Depois mudar essa solução
 
-                    if self.map:
+                    if self.map: # TODO REfatorar
                         w = len(self.map[0])
                         h = len(self.map)
                     else:
@@ -119,7 +109,7 @@ class MapMaker:
                                         self.gridmap[x][y].change_tile(int(self.selected_tile))
 
 
-
+                # Eventos de Teclado
                 elif event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         self.shutdown()
