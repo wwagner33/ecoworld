@@ -113,6 +113,7 @@ class MapMaker:
                             if self.gridmap[x][y].has_been_clicked(pos):
                                 # print(x,y)
                                 if (self.selected_tile):
+
                                     self.gridmap[x][y].change_tile(int(self.selected_tile))
 
 
