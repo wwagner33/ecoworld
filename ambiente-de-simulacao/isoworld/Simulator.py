@@ -40,7 +40,7 @@ class Simulator:
             Config.WORLD_WIDTH, Config.WORLD_HEIGHT = x["wid"], x["hei"]
             Config.VIEW_WIDTH, Config.VIEW_HEIGHT = x["view_wid"], x["view_hei"]
             
-            
+            # * Trocar arquivo de texto para json List []
             with open(x['terrain_map']) as map_file:
                 data = map_file.read().splitlines()
 
@@ -49,9 +49,9 @@ class Simulator:
                         map["terrain"].append([int(x) for x in l.split(' ')])
                     elif index > Config.WORLD_WIDTH:
                         map["height"].append([int(x) for x in l.split(' ')])
-         
 
-        
+
+
         return World(map, player)
 
 
