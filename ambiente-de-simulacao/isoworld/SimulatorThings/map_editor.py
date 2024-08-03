@@ -1,3 +1,5 @@
+from datetime import datetime
+import json
 import sys
 import pygame as py
 import pygame_gui
@@ -18,6 +20,7 @@ class MapMaker:
         self.images = ImageManager()
         py.display.set_caption('Criador de mapas interface')
         self.map: list[list] = map or [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
+        self.height_map = [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)]
         self.clock = py.time.Clock()
         self.blockSize = 80
         self.gridmap: list[list[EditiongTile]] = self.create_grid_tile(self.map, self.blockSize)
@@ -105,8 +108,10 @@ class MapMaker:
                                 if (self.selected_tile):
                                     if (self.selected_tile == 'R'):
                                         self.gridmap[x][y].change_tile(None)
+                                        self.map[x][y] = None
                                     else:
                                         self.gridmap[x][y].change_tile(int(self.selected_tile))
+                                        self.map[x][y] = int(self.selected_tile)
 
 
                 # Eventos de Teclado
@@ -125,6 +130,8 @@ class MapMaker:
                 
                 # Gui parte por enquanto
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
+                    if 'save_current_map' in event.ui_object_id :
+                        self.__save_current_map()
                     if 'mouse_changer' in event.ui_object_id :
                         self.gui.send_event(event)
                         self.selected_tile = event.ui_object_id[-1]
@@ -140,6 +147,24 @@ class MapMaker:
             delta_time =self.clock.tick(Config.MAX_FPS) / 1000.0
             self.gui.render(delta_time)
             py.display.flip()
+
+
+    def __save_current_map(self):
+        print(self.map)
+        now = datetime.now()
+
+        current_time = now.strftime("%H:%M:%S")
+
+
+
+
+        map = {
+               'map_relevo': self.height_map,
+               'map_texture': self.map
+               }
+
+        with open(f'map_saved{current_time}.json', 'w', encoding='utf-8') as f:
+            json.dump(map, f, ensure_ascii=False, indent=4)
 
     
     def shutdown(self):
