@@ -42,13 +42,16 @@ class Simulator:
             
             # * Trocar arquivo de texto para json List []
             with open(x['terrain_map']) as map_file:
-                data = map_file.read().splitlines()
 
-                for index, l in enumerate(data):
-                    if index < Config.WORLD_WIDTH:
-                        map["terrain"].append([int(x) for x in l.split(' ')])
-                    elif index > Config.WORLD_WIDTH:
-                        map["height"].append([int(x) for x in l.split(' ')])
+                map_json = json.loads(map_file.read())
+
+                for line in map_json['map_texture']:
+                    # print(line)
+                    map['terrain'].append(line)
+
+                for line in map_json['map_relevo']:
+                    # print(line)
+                    map['height'].append(line)
 
 
 
@@ -115,17 +118,17 @@ class Simulator:
                 self.gui.manager.process_events(event)
 
 
-            self.update_game_state()
+            # TODO self.update_game_state()
             self.render_game()
             delta_time =self.clock.tick(Config.MAX_FPS) / 1000.0
             self.gui.render(delta_time)
             pygame.display.flip()
 
-
-    def update_game_state(self):
-        self.world.update()
-        for agent in self.agents:
-            agent.update()
+    # TODO
+    # def update_game_state(self):
+    #     self.world.update()
+    #     for agent in self.agents:
+    #         agent.update()
 
 
     def render_game(self):

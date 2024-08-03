@@ -4,6 +4,6 @@
         "hei": 10,
         "view_wid": 10,
         "view_hei": 10,
-        "terrain_map": "./map.txt"
+        "terrain_map": "./SimulatorThings/map_test.json"
     }
 }
