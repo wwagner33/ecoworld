@@ -5,8 +5,8 @@ import pygame_gui
 from pygame.locals import *
 from ImageManager import ImageManager
 from PlayerAgent import PlayerAgent
-from SimulatorThings.Gui import Gui
-from SimulatorThings.map_maker_gui import MapMakerGui
+# from SimulatorThings.Gui.Gui import Gui
+from SimulatorThings.Gui.map_maker_gui import MapMakerGui
 from World import World
 from Agent import Agent
 from Config import Config

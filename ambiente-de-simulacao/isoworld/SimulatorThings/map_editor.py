@@ -4,7 +4,7 @@ import pygame_gui
 from pygame.locals import *
 from ImageManager import ImageManager
 from SimulatorThings.editing_tile import EditiongTile
-from SimulatorThings.map_maker_gui import MapMakerGui
+from SimulatorThings.Gui.map_maker_gui import MapMakerGui
 from Config import Config
 
 class MapMaker:
