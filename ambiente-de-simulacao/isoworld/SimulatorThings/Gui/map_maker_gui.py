@@ -5,7 +5,8 @@ from pygame_gui.elements.ui_panel import UIPanel
 from pygame_gui.core import ObjectID
 
 from pygame_gui.elements import UIButton
-from SimulatorThings.Gui.Gui import Gui 
+from SimulatorThings.Gui.Gui import Gui
+from SimulatorThings.Gui.height_pop_up_gui import HeightPopUpGui 
 
 
 class MapMakerGui(Gui):
@@ -38,13 +39,13 @@ class MapMakerGui(Gui):
 
     def __init_buttons(self):
         buttons = []
-        buttons.append(pygame_gui.elements.UIButton(relative_rect=pygame.Rect((30, 590), (70, 50)),
+        buttons.append(UIButton(relative_rect=pygame.Rect((30, 590), (70, 50)),
                                              text='Apagar',
                                              container=self.painel,
                                              object_id=ObjectID(f'#mouse_changer_R'),
                                              manager= self.manager
                                              ))
-        buttons.append(pygame_gui.elements.UIButton(relative_rect=pygame.Rect((105, 590), (80, 50)),
+        buttons.append(UIButton(relative_rect=pygame.Rect((105, 590), (80, 50)),
                                              text='Salvar',
                                              container=self.painel,
                                              object_id=ObjectID(f'#save_current_map'),
@@ -85,6 +86,9 @@ class MapMakerGui(Gui):
         if self.mouse_editing:
             self.screen.blit(self.mouse_image, pos)
 
+
+    def show_height_popup(self, x, y):
+        return HeightPopUpGui(self.screen, self.manager, x, y)
 
 
 class TilesetOption:

@@ -26,7 +26,9 @@ class MapMaker:
         self.gridmap: list[list[EditiongTile]] = self.create_grid_tile(self.map, self.blockSize)
 
         self.gui = MapMakerGui(self.screen, self.images.tile_images)
+        self.last_tile_clicked = None
         self.selected_tile = None
+        self.hpopup_gui = None
 
 
     def _load_map(self):
@@ -93,6 +95,8 @@ class MapMaker:
                 
                 elif event.type == py.MOUSEBUTTONUP: # Todo Fazer subir e diminuir a altura com o precionar do Shift
                     pos = py.mouse.get_pos()
+                    if pos[0] < 200:
+                        self.hpopup_gui.painel.kill()
 
                     if self.map: # TODO REfatorar
                         w = len(self.map[0])
@@ -104,15 +108,27 @@ class MapMaker:
                     for x in range(0, w): 
                         for y in range(0, h):
                             if self.gridmap[x][y].has_been_clicked(pos): 
-                                # print(x,y)
-                                if (self.selected_tile):
-                                    if (self.selected_tile == 'R'):
-                                        self.gridmap[x][y].change_tile(None)
-                                        self.map[x][y] = None
-                                    else:
-                                        self.gridmap[x][y].change_tile(int(self.selected_tile))
-                                        self.map[x][y] = int(self.selected_tile)
 
+                                if event.button == 3: # Mouse Right Click
+
+                                    if self.hpopup_gui:
+                                       self.hpopup_gui.painel.kill()
+
+                                    self.hpopup_gui = self.gui.show_height_popup(pos[0],pos[1])
+                                    self.last_tile_clicked = self.gridmap[x][y]
+                                    
+
+                                elif event.button == 1: # Mouse Left Click:
+                                    
+
+                                    if (self.selected_tile):
+                                        if (self.selected_tile == 'R'):
+                                            self.gridmap[x][y].change_tile(None)
+                                            self.map[x][y] = None
+                                        else:
+                                            self.gridmap[x][y].change_tile(int(self.selected_tile))
+                                            self.map[x][y] = int(self.selected_tile)
+                                    
 
                 # Eventos de Teclado
                 elif event.type == KEYDOWN:
@@ -137,6 +153,15 @@ class MapMaker:
                         self.selected_tile = event.ui_object_id[-1]
                     else:
                         self.selected_tile = None
+                    
+                    if 'Plus_height' in event.ui_object_id :
+                        if self.last_tile_clicked.height < 7: # ! Magic Number
+                            self.last_tile_clicked.height += 1  
+                    
+                    if 'Minus_height' in event.ui_object_id :
+                        if self.last_tile_clicked.height > 0: 
+                            self.last_tile_clicked.height -= 1
+                        
                         
                         
                 self.gui.manager.process_events(event)
@@ -149,11 +174,18 @@ class MapMaker:
             py.display.flip()
 
 
+    def __update_height_map(self):
+        for x in range(len(self.height_map)):
+            for y in range(len(self.height_map)):
+                self.height_map[x][y] = self.gridmap[x][y].height
+
+
     def __save_current_map(self):
         print(self.map)
         now = datetime.now()
 
         current_time = now.strftime("%H:%M:%S")
+        self.__update_height_map()
 
 
 
