@@ -91,7 +91,7 @@ class MapMaker:
                 if event.type == QUIT:
                     self.shutdown()
                 
-                elif event.type == py.MOUSEBUTTONUP:
+                elif event.type == py.MOUSEBUTTONUP: # Todo Fazer subir e diminuir a altura com o precionar do Shift
                     pos = py.mouse.get_pos()
 
                     if self.map: # TODO REfatorar
@@ -103,7 +103,7 @@ class MapMaker:
 
                     for x in range(0, w): 
                         for y in range(0, h):
-                            if self.gridmap[x][y].has_been_clicked(pos):
+                            if self.gridmap[x][y].has_been_clicked(pos): 
                                 # print(x,y)
                                 if (self.selected_tile):
                                     if (self.selected_tile == 'R'):

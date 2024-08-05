@@ -2,10 +2,12 @@ import pygame as py
 
 
 class EditiongTile:
-    def __init__(self, x, y, size, screen, type=0) -> None:
+    def __init__(self, x, y, size, screen, type=0, height=0) -> None:
         self.x = x
         self.my_font = py.font.SysFont('Comic Sans MS', 30)
+        self.h_font = py.font.SysFont('Comic Sans MS', 15)
         self.y = y
+        self.height = height
         self.size = size
         self.screen = screen
         self.type = type
@@ -24,7 +26,6 @@ class EditiongTile:
         if self.type is None:
             color = self.__sum_tuples(color, (100, 100, 100))
             self.__draw_tile(color, rect)
-
 
         elif self.type == 0:
             color = self.__sum_tuples(color, (0, 150, 0))
@@ -46,10 +47,11 @@ class EditiongTile:
     def __draw_tile(self, color, rect):
         gui_painel_width = 200 # Maybe replace after
         py.draw.rect(self.screen, color, rect, 1)
-        if self.type is None:
-            py.draw.circle(self.screen, color, (self.x *self.size + gui_painel_width + self.size/2, self.y*self.size+ self.size/2), 5, 5)
-        else:
+        if self.type is not None:
             self.screen.blit(self.my_font.render(str(self.type), False, color), (self.x *self.size + gui_painel_width + self.size/2-5, self.y*self.size+15))
+            self.screen.blit(self.h_font.render(str(self.height), False, color), ((self.x *self.size + gui_painel_width + self.size/2-5) - 10, self.y*self.size+15))
+        else:
+            py.draw.circle(self.screen, color, (self.x *self.size + gui_painel_width + self.size/2, self.y*self.size+ self.size/2), 5, 5)
 
 
     def __sum_tuples(self, tuples1, tuples2):
