@@ -163,7 +163,7 @@ class MapMaker:
                'map_texture': self.map
                }
 
-        with open(f'map_saved{current_time}.json', 'w', encoding='utf-8') as f:
+        with open(f'./SimulatorThings/maps/map_saved{current_time}.json', 'w', encoding='utf-8') as f:
             json.dump(map, f, ensure_ascii=False, indent=4)
 
     
