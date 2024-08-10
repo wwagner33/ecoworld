@@ -46,7 +46,6 @@ class MapMaker:
 
     def run(self):
         self.load_all_images()
-
         self.main_loop()
 
 
@@ -147,14 +146,6 @@ class MapMaker:
                 elif event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         self.shutdown()
-                    elif event.key == py.K_w:
-                        self.player.move(0, -1)
-                    elif event.key == py.K_s:
-                        self.player.move(0, 1)
-                    elif event.key == py.K_a:
-                        self.player.move(-1, 0)
-                    elif event.key == py.K_d:
-                        self.player.move(1, 0)
 
                 # Gui parte por enquanto
                 if event.type == pygame_gui.UI_BUTTON_PRESSED:
@@ -191,7 +182,8 @@ class MapMaker:
     def __save_current_map(self):
         
         self.__update_height_map()
-
+        self.map_name = self.gui.get_map_name_text()
+        
         if not self.map_name:
             now = datetime.now()
             current_time = now.strftime("%H_%M_%S")
@@ -199,7 +191,6 @@ class MapMaker:
         
         else:
             m_name = self.map_name
-
         
 
         map = {
