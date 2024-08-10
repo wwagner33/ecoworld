@@ -59,6 +59,8 @@ class World:
         for y in range(Config.VIEW_HEIGHT):
             for x in range(Config.VIEW_WIDTH):
                 tile_index = self.terrain_map[y][x]
+                if tile_index is None:
+                    continue
                 tile_image = self.tile_images[tile_index]
                 xScreen, yScreen = self.__posicionar_na_grid(x,y,self.height_map[y][x])  # Subistituir esses xyScreen?
 

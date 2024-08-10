@@ -95,7 +95,7 @@ class MapMaker:
                 
                 elif event.type == py.MOUSEBUTTONUP: # Todo Fazer subir e diminuir a altura com o precionar do Shift
                     pos = py.mouse.get_pos()
-                    if pos[0] < 200:
+                    if pos[0] < 200 and self.hpopup_gui:
                         self.hpopup_gui.painel.kill()
 
                     if self.map: # TODO REfatorar
@@ -184,7 +184,7 @@ class MapMaker:
         print(self.map)
         now = datetime.now()
 
-        current_time = now.strftime("%H:%M:%S")
+        current_time = now.strftime("%H_%M_%S")
         self.__update_height_map()
 
 
