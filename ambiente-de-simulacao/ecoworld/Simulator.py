@@ -20,7 +20,7 @@ class Simulator:
         pygame.display.set_caption('Mundo dos Agentes')
         self.images = ImageManager()
         self.clock = pygame.time.Clock()
-        self.gui = MapMakerGui(self.screen, self.images.tile_images)
+        # self.gui = MapMakerGui(self.screen, self.images.tile_images)
         self.player = PlayerAgent(x=0, y=0, image=self.images.object_images[2])
         self.world = self._load_world(simulation_map, self.player)
         self.agents = [self.player]
@@ -115,13 +115,13 @@ class Simulator:
                         
                         
                         
-                self.gui.manager.process_events(event)
+                # self.gui.manager.process_events(event)
 
 
             # TODO self.update_game_state()
             self.render_game()
             delta_time =self.clock.tick(Config.MAX_FPS) / 1000.0
-            self.gui.render(delta_time)
+            # self.gui.render(delta_time)
             pygame.display.flip()
 
     # TODO
