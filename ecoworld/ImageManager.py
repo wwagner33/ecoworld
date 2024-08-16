@@ -39,7 +39,7 @@ class ImageManager:
     def load_image(self, path):
         try:
             # print(os.path.join('', path))
-            original_image = pygame.image.load(os.path.join('', path)).convert_alpha()
+            original_image = pygame.image.load(os.path.join('ecoworld/', path)).convert_alpha()
             scaled_image = pygame.transform.scale(
                 original_image,
                 (int(original_image.get_width() * Config.SCALE_MULTIPLIER),
