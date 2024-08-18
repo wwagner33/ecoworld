@@ -128,15 +128,15 @@ def loadAllImages():
     objectType = []
     agentType = []
 
-    tileType.append(loadImage('assets/basic111x128/platformerTile_48_ret.png')) # grass
-    tileType.append(loadImage('assets/ext/isometric-blocks/PNG/Platformer tiles/platformerTile_33.png')) # brick
-    tileType.append(loadImage('assets/ext/isometric-blocks/PNG/Abstract tiles/abstractTile_12.png')) # blue grass (?)
-    tileType.append(loadImage('assets/ext/isometric-blocks/PNG/Abstract tiles/abstractTile_09.png')) # grey brock
+    tileType.append(loadImage('ecoworld/assets/basic111x128/platformerTile_48_ret.png')) # grass
+    tileType.append(loadImage('ecoworld/assets/ext/isometric-blocks/PNG/Platformer tiles/platformerTile_33.png')) # brick
+    tileType.append(loadImage('ecoworld/assets/ext/isometric-blocks/PNG/Abstract tiles/abstractTile_12.png')) # blue grass (?)
+    tileType.append(loadImage('ecoworld/assets/ext/isometric-blocks/PNG/Abstract tiles/abstractTile_09.png')) # grey brock
 
     objectType.append(None) # default -- never drawn
-    objectType.append(loadImage('assets/basic111x128/tree_small_NW_ret.png')) # normal tree
-    objectType.append(loadImage('assets/basic111x128/blockHuge_N_ret.png')) # construction block
-    objectType.append(loadImage('assets/basic111x128/tree_small_NW_ret_red.png')) # burning tree
+    objectType.append(loadImage('ecoworld/assets/basic111x128/tree_small_NW_ret.png')) # normal tree
+    objectType.append(loadImage('ecoworld/assets/basic111x128/blockHuge_N_ret.png')) # construction block
+    objectType.append(loadImage('ecoworld/assets/basic111x128/tree_small_NW_ret_red.png')) # burning tree
 
     agentType.append(None) # default -- never drawn
     agentType.append(loadImage('assets/basic111x128/invader_ret.png')) # invader
