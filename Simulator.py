@@ -5,8 +5,7 @@ import pygame_gui
 from pygame.locals import *
 from ImageManager import ImageManager
 from PlayerAgent import PlayerAgent
-# from SimulatorThings.Gui.Gui import Gui
-from SimulatorThings.Gui.map_maker_gui import MapMakerGui
+from SimulatorThings.Gui.simulation_gui import SimulationGui
 from World import World
 from Agent import Agent
 from Config import Config
@@ -20,10 +19,14 @@ class Simulator:
         pygame.display.set_caption('Mundo dos Agentes')
         self.images = ImageManager()
         self.clock = pygame.time.Clock()
-        # self.gui = MapMakerGui(self.screen, self.images.tile_images)
         self.player = PlayerAgent(x=0, y=0, image=self.images.object_images[2])
         self.world = self._load_world(simulation_map, self.player)
         self.agents = [self.player]
+        self.informations = {
+                'Co2_level': 30.5,
+                'Oxigen_level': 50.5,
+            }
+        self.gui = SimulationGui(self.screen, self.informations)
 
 
     def _load_world(self, path: str, player:Agent):
@@ -115,13 +118,13 @@ class Simulator:
                         
                         
                         
-                # self.gui.manager.process_events(event)
+                self.gui.manager.process_events(event)
 
 
             # TODO self.update_game_state()
             self.render_game()
             delta_time =self.clock.tick(Config.MAX_FPS) / 1000.0
-            # self.gui.render(delta_time)
+            self.gui.render(delta_time)
             pygame.display.flip()
 
     # TODO
