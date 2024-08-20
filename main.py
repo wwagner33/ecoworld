@@ -2,7 +2,7 @@ from Simulator import Simulator
 from SimulatorThings.map_editor import MapMaker
 
 def main():
-    game_simulator = Simulator("./ecoworld/simulation00.json")
+    game_simulator = Simulator("./simulation00.json")
     # map_editor = MapMaker()
     try:
         # map_editor.run()

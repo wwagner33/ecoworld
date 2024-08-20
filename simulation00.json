@@ -4,6 +4,6 @@
         "hei": 10,
         "view_wid": 10,
         "view_hei": 10,
-        "terrain_map": "./ecoworld/SimulatorThings/maps/ecoworld.json"
+        "terrain_map": "./SimulatorThings/maps/ecoworld.json"
     }
 }
