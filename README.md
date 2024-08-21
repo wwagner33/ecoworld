@@ -12,8 +12,8 @@ Este projeto visa promover a educação crítica de pensdamento das ações econ
 
 ## Equipe
 
-* André Domingues (Bolsista)
-*
+* **Wellington Wagner Ferreira Sarmento** (Coordenador)
+* **André Domingues** (Bolsista)
 
 ## Como executar
 
