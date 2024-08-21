@@ -23,7 +23,7 @@ class Simulator:
         self.world = self._load_world(simulation_map, self.player)
         self.agents = [self.player]
         self.informations = {
-                'Co2_level': 30.5,
+                'Co2_level': 30.5, # talvez uma imagem para auxilar o entendimento
                 'Oxigen_level': 50.5,
             }
         self.gui = SimulationGui(self.screen, self.informations)

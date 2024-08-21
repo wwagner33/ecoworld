@@ -11,7 +11,7 @@ class Gui(object):
     
     def __init__(self, screen) -> None:
         self.screen = screen
-        self.manager = pygame_gui.UIManager((970, 640), theme_path="themes.json") # Números mágicos
+        self.manager = pygame_gui.UIManager((970, 640), theme_path="./SimulatorThings/themes.json") # Números mágicos
         
         
     

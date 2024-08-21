@@ -19,13 +19,15 @@ class SimulationGui(Gui):
         informartions = []
         for info, value in self.informations.items():
             info_l = f'{info}: {value}'            
+                       
             
             informartions.append(
                 UILabel(
-                    Rect((20, 20 * len(informartions)), (200, 50)), 
-                    text=info_l,
+                    Rect((10, 20 * len(informartions)), (200, 50)),
+                    text = info_l,
                     manager=self.manager, 
                     container=self.painel,
+                    anchors={'right_target': self.painel}
                     # Colocar mais alinhamento
                     )
                 )
