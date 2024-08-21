@@ -20,13 +20,22 @@ class Simulator:
         self.images = ImageManager()
         self.clock = pygame.time.Clock()
         self.player = PlayerAgent(x=0, y=0, image=self.images.object_images[2])
-        self.world = self._load_world(simulation_map, self.player)
+        self.world = self._init_world(simulation_map, self.player)
         self.agents = [self.player]
         self.informations = {
                 'Co2_level': 30.5, # talvez uma imagem para auxilar o entendimento
                 'Oxigen_level': 50.5,
             }
         self.gui = SimulationGui(self.screen, self.informations)
+
+
+    def _init_world(self, path: str, player:Agent=None):
+        with open(path) as json_file:
+            x = json.loads(json_file.read())["world_dimensions"]
+            Config.WORLD_WIDTH, Config.WORLD_HEIGHT = x["wid"], x["hei"]
+            Config.VIEW_WIDTH, Config.VIEW_HEIGHT = x["view_wid"], x["view_hei"]
+            
+        return self._load_world(x['terrain_map'], player)
 
 
     def _load_world(self, path: str, player:Agent):
@@ -38,23 +47,15 @@ class Simulator:
                 'height': []
             }
             
-        with open(path) as json_file:
-            x = json.loads(json_file.read())["world_dimensions"]
-            Config.WORLD_WIDTH, Config.WORLD_HEIGHT = x["wid"], x["hei"]
-            Config.VIEW_WIDTH, Config.VIEW_HEIGHT = x["view_wid"], x["view_hei"]
-            
-            # * Trocar arquivo de texto para json List []
-            with open(x['terrain_map']) as map_file:
+        with open(path) as map_file:
 
-                map_json = json.loads(map_file.read())
+            map_json = json.loads(map_file.read())
 
-                for line in map_json['map_texture']:
-                    # print(line)
-                    map['terrain'].append(line)
+            for line in map_json['map_texture']:
+                map['terrain'].append(line)
 
-                for line in map_json['map_relevo']:
-                    # print(line)
-                    map['height'].append(line)
+            for line in map_json['map_relevo']:
+                map['height'].append(line)
 
 
 
