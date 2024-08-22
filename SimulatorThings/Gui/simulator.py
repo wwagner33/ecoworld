@@ -1,7 +1,6 @@
 import sys
 import json
 import pygame
-import pygame_gui
 from pygame.locals import *
 from ImageManager import ImageManager
 from PlayerAgent import PlayerAgent
@@ -38,22 +37,16 @@ class Simulator:
         return self._load_world(x['terrain_map'], player)
 
 
-    def _load_world(self, path: str, player:Agent):
-
-        # Pegar as inforações do mapa/ tamanho e dimensões, e quem sabe a visualização -> E atualiza as variaveis do Config.py
-        # Coloca o mapa de alguma forma no World.py
+    def _load_world(self, path: str, player:Agent=None):
         map = {
                 'terrain': [],
                 'height': []
             }
             
         with open(path) as map_file:
-
             map_json = json.loads(map_file.read())
-
             for line in map_json['map_texture']:
                 map['terrain'].append(line)
-
             for line in map_json['map_relevo']:
                 map['height'].append(line)
 
@@ -112,10 +105,8 @@ class Simulator:
                         self.player.move(1,0)
                 
                 
-                # Gui parte por enquanto
-                if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                    if 'mouse_changer' in event.ui_object_id :
-                        self.gui.send_event(event)
+                # pyg_gui
+                self.gui.send_event(event, self)
                         
                         
                         

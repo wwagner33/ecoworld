@@ -1,13 +1,13 @@
 import pygame
 import pygame_gui
+import pygame_gui.elements.ui_text_box
+import pygame_gui.elements.ui_text_entry_line
+from pygame_gui.elements import UIButton
 from pygame_gui.elements.ui_image import UIImage
 from pygame_gui.elements.ui_panel import UIPanel
-import pygame_gui.elements.ui_text_box
 from pygame_gui.elements.ui_text_entry_line import UITextEntryLine
 from pygame_gui.core import ObjectID
 
-from pygame_gui.elements import UIButton
-import pygame_gui.elements.ui_text_entry_line
 from SimulatorThings.Gui.Gui import Gui
 from SimulatorThings.Gui.height_pop_up_gui import HeightPopUpGui
 
@@ -48,7 +48,7 @@ class MapMakerGui(Gui):
 
     def __init_tileset(self):
         tileset = []
-        temp_x = 10  # Todo refactore that
+        temp_x = 10  # * Todo refactore that
         temp_y = 10
         for i, tile in enumerate(self.tiles_images):
             temp_x = 10 + i * 65
@@ -98,17 +98,20 @@ class MapMakerGui(Gui):
             self.mouse_image = None
             return
 
+
     def get_map_name_text(self) -> str:
         return self.name_field[0].get_text()
+
 
     def send_event(self, event):
         if event.type == pygame_gui.UI_BUTTON_PRESSED:
             if "mouse_changer" in str(event.ui_object_id):
-                if event.ui_object_id[-1] == "R":
+                if event.ui_object_id[-1] == "R": # * Mudar esses sistema de R ou id 
                     self.__change_mouse_curser(None, False)
                     return
                 id = event.ui_object_id[-1]
                 self.__change_mouse_curser(self.__get_image_by_id(id), True)
+
 
     def render(self, delta_time):
         super().render(delta_time)
@@ -116,8 +119,10 @@ class MapMakerGui(Gui):
         if self.mouse_editing:
             self.screen.blit(self.mouse_image, pos)
 
+
     def show_height_popup(self, x, y):
         return HeightPopUpGui(self.screen, self.manager, x, y)
+
 
 
 class TilesetOption:

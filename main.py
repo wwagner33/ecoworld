@@ -1,4 +1,4 @@
-from Simulator import Simulator
+from SimulatorThings.Gui.simulator import Simulator
 from SimulatorThings.map_editor import MapMaker
 
 def main():
