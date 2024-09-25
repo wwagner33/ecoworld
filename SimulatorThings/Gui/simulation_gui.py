@@ -12,18 +12,20 @@ from SimulatorThings.Gui.Gui import Gui
 
 
 class SimulationGui(Gui):
-    def __init__(self, screen, informations) -> None:
+    """Interface gráfica de usuário para simulações, responsável pela apresentações de informações dadas e pela troca de mapas de simulações."""
+    def __init__(self, screen, informations:dict) -> None:
         super().__init__(screen=screen)
         self.informations: dict = informations
         self.painel = UIPanel(
             relative_rect = Rect((0, 0), (200, 640)), manager=self.manager
         )
-        self.status_informations: dict = self.__init_label_informations() # TODO espaço onde podemos colocar inforações que nos interessam
-        self.bottuns: list = self.__init_select_map_buttom()  # TODO botões para trocar de mapa ou fazer outras funcionalidades
+        self.status_informations: dict = self.__init_label_informations()
+        self.bottuns: list = self.__init_select_map_buttom()
         self.file_dialog = None
 
 
     def __init_label_informations(self):
+        """Retorna uma list com UILabels para cada informação fornecida."""
         informartions = []
         for info, value in self.informations.items():
             info_l = f"{info}: {value}"
@@ -42,6 +44,7 @@ class SimulationGui(Gui):
 
 
     def __init_select_map_buttom(self):
+        """Retorna um UIButton responsavel pela mudança de mapa"""
         return [
             UIButton(
                 relative_rect=Rect((30, 590), (100, 50)),
@@ -54,6 +57,7 @@ class SimulationGui(Gui):
 
 
     def send_event(self, event, simulator):
+        """Recebe eventos pygame_gui e responde caso seja seja o evento de selecionar o mapa."""
         if event.type == UI_BUTTON_PRESSED:
             if "select_map" in str(event.ui_object_id):
                 self.file_dialog = UIFileDialog(
@@ -79,6 +83,7 @@ class SimulationGui(Gui):
 
 
     def __change_map(self, simulator, file_path):
+        """Troca o mapa atual para outro presente no {file_path} informado."""
         simulator.world = simulator._load_world(file_path, simulator.player)
         simulator.init_world()
         print("Mapa Mudado")

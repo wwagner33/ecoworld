@@ -2,6 +2,7 @@ import pygame as py
 
 
 class EditiongTile:
+    """Tile que serve como auxilio visual para a criação de terreno, representando um bloco"""
     def __init__(self, x, y, size, screen, type=0, height=0) -> None:
         self.x = x
         self.my_font = py.font.SysFont('Comic Sans MS', 30)

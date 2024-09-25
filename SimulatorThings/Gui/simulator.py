@@ -13,9 +13,8 @@ from Config import Config
 class Simulator:
     def __init__(self, simulation_map:str=None):
         pygame.init()
-
-        self.screen = pygame.display.set_mode((Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT), DOUBLEBUF)
         pygame.display.set_caption('Mundo dos Agentes')
+        self.screen = pygame.display.set_mode((Config.SCREEN_WIDTH, Config.SCREEN_HEIGHT), DOUBLEBUF)
         self.images = ImageManager()
         self.clock = pygame.time.Clock()
         self.player = PlayerAgent(x=0, y=0, image=self.images.object_images[2])
@@ -38,6 +37,7 @@ class Simulator:
 
 
     def _load_world(self, path: str, player:Agent=None):
+        """Carrega o mundo (world) presente em um determinado caminho {path}-"""
         map = {
                 'terrain': [],
                 'height': []
@@ -50,8 +50,6 @@ class Simulator:
             for line in map_json['map_relevo']:
                 map['height'].append(line)
 
-
-
         return World(map, player)
 
 
@@ -63,6 +61,7 @@ class Simulator:
 
 
     def load_all_images(self):
+        """Carrega as imagens para o ambiente de simulação"""
         self.images.load_images()
         if not self.images.tile_images:
             print("Error: Tile images are not loaded.")
@@ -79,6 +78,7 @@ class Simulator:
 
 
     def init_world(self):
+        """Inicializa o mundo, carregando imagens, terreno, objetos e outras configurações do ambiente"""
         if not self.images.tile_images:
             raise ValueError("Tile images must be loaded before initializing terrain.")
         self.world.load_images(self.images.tile_images, self.images.object_images, self.images.agent_images)
@@ -106,10 +106,8 @@ class Simulator:
                 
                 
                 # pyg_gui
+                # *Receptor de eventos do pygame_gui
                 self.gui.send_event(event, self)
-                        
-                        
-                        
                 self.gui.manager.process_events(event)
 
 
@@ -119,7 +117,7 @@ class Simulator:
             self.gui.render(delta_time)
             pygame.display.flip()
 
-    # TODO
+    # TODO Implementar agentes dentro do ambiente
     # def update_game_state(self):
     #     self.world.update()
     #     for agent in self.agents:
@@ -129,12 +127,14 @@ class Simulator:
     def render_game(self):
         self.screen.fill((0, 0, 0))
         self.world.render(self.screen)
+        # TODO Implementar agentes dentro do ambiente
         for agent in self.agents:
             ...
             # TODO Teste agent.render(self.screen)
 
 
     def shutdown(self):
+        """Função responsável pelo desligamento seguro da aplicação"""
         print("Shutting down...")
         pygame.quit()
         sys.exit()

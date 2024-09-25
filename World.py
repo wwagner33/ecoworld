@@ -7,6 +7,7 @@ from Config import Config
 
 """Ficará Responsavel por 'Redenrizar' os elementos"""
 class World:
+    """Representação do ambiente onde os terrenos, objetos e jogadores são renderizados e podem interagir entre si."""
     def __init__(self, map=None, player_agent: Agent=None):
         self.map = map # Colocar as deais condições para a simulação?
         self.terrain_map = [[0] * Config.WORLD_WIDTH for _ in range(Config.WORLD_HEIGHT)] # Legal
@@ -29,6 +30,7 @@ class World:
 
 
     def initialize_terrain(self):
+        """Inicializa o terreno da instância."""
         if not self.tile_images:
             print("Warning: No tile images available for terrain initialization.")
             return
@@ -38,12 +40,13 @@ class World:
 
 
     def initialize_objects(self):
+        """Inicializa os objetos da instância."""
         for y in range(0, Config.WORLD_HEIGHT, 5):
             for x in range(0, Config.WORLD_WIDTH, 5):
                 level =  0 #random.randint(0, Config.OBJECT_MAP_LEVELS - 1)
                 self.object_map[level][y][x] = random.randint(1, len(self.object_images) - 1)
     
-    # TODO
+    # TODO implementar funcionamento de ciclos de climas
     # def update(self): 
     #     # Regular update method to handle game logic
     #     self.current_cycle += 1
@@ -51,8 +54,8 @@ class World:
     #         self.change_weather()
 
 
-    """Função que redencia as imagens dentro da tela{screen}"""
     def render(self, screen):
+        """Função que redencia as imagens dentro da tela {screen}"""
         self.tile_wid = self.tile_images[1].get_width()
         self.tile_hei = self.tile_images[1].get_height()
 
@@ -62,7 +65,7 @@ class World:
                 if tile_index is None:
                     continue
                 tile_image = self.tile_images[tile_index]
-                xScreen, yScreen = self.__posicionar_na_grid(x,y,self.height_map[y][x])  # Subistituir esses xyScreen?
+                xScreen, yScreen = self.__posicionar_na_grid(x,y,self.height_map[y][x])
 
                 # TODO Colocar em algum lugar a informação -> Para elevar algum elemento tudo que é necessário é diminuir seu valor de y
 
@@ -93,14 +96,11 @@ class World:
     
 
     def __posicionar_na_grid(self, x, y, height) -> tuple[tuple]:
+        """Retorna as coordenadas x e y que respeitem a grid isométrica."""
         xScreen, yScreen = ((self.x_offset + x * self.tile_wid / 2 - y * self.tile_wid / 2), \
                              (self.y_offset + y * self.tile_hei / 4 + x * self.tile_hei / 4 - (self.tile_hei / 2) * (height + 1)))
         return (xScreen, yScreen)
-    
-    # FAzer um um novo modo que vai ser só pra editar, com grid plana, e numeros para a altura
-    
-    # def __
-    # """ Pega o x e y  """    
+
 
     def load_images(self, tile_images, object_images, agent_images):
         self.tile_images = tile_images
@@ -108,8 +108,8 @@ class World:
         self.agent_images = agent_images
 
 
-    """inicializa os agentes no Mundo"""
     def initialize_agents(self):
+        """inicializa os agentes no Mundo"""
         # Example: Place agents at strategic locations or random positions
         starting_positions = [(10, 10), (20, 20), (30, 30)]  # Preset or generated positions
         for pos in starting_positions:
@@ -117,7 +117,7 @@ class World:
             self.agent_map[pos[1]][pos[0]] = agent  # Assuming self.agent_map stores agent references
 
 
-    #TODO
+    #TODO implementar funcionamento de ciclos de climas
     def setup_environmental_factors(self):
         # Example: Initialize weather, lighting, or other environmental factors
         self.weather = "Sunny"  # Default weather
@@ -130,7 +130,7 @@ class World:
         import random
         return random.choice(self.agent_images)
 
-    #TODO
+    #TODO implementar funcionamento de ciclos de climas
     # def change_weather(self):
     #     # Example method to change weather conditions randomly
     #     import random

@@ -13,6 +13,8 @@ from SimulatorThings.Gui.height_pop_up_gui import HeightPopUpGui
 
 
 class MapMakerGui(Gui):
+    """Interface gráfica de usuário para Criação de mapas de simulação,
+    responsável pela distribuição de ferramentas para a criação de mapas personalizados."""
     def __init__(self, screen, images) -> None:
         super().__init__(screen=screen)
         self.painel = UIPanel(
@@ -25,7 +27,9 @@ class MapMakerGui(Gui):
         self.name_field = self.__init_name_field()
         self.buttons = self.__init_buttons()
 
+
     def __init_name_field(self):
+        """Retorna um UITextEntryLine responsável por determinar o nome do mapa sendo feito."""
         elements = []
         elements.append(
             UITextEntryLine(
@@ -46,7 +50,9 @@ class MapMakerGui(Gui):
 
         return elements
 
+
     def __init_tileset(self):
+        """Cria uma lista de TilesetOption os organizando na tela e a retorna."""
         tileset = []
         temp_x = 10  # * Todo refactore that
         temp_y = 10
@@ -62,7 +68,9 @@ class MapMakerGui(Gui):
 
         return tileset
 
+
     def __init_buttons(self):
+        """Cria uma lista de UIButton os organizando na tela e a retorna."""
         buttons = []
         buttons.append(
             UIButton(
@@ -84,10 +92,14 @@ class MapMakerGui(Gui):
         )
         return buttons
 
+
     def __get_image_by_id(self, id):
+        """Retorna a imagem de um tipe através de seu {id}"""
         return self.tiles_images[int(id)]
 
+
     def __change_mouse_curser(self, image, active):
+        """Ativa e desativa a personalização do cursor com a {image} do TilesetOption."""
         if active:
             pygame.mouse.set_visible(False)
             self.mouse_editing = True
@@ -121,11 +133,13 @@ class MapMakerGui(Gui):
 
 
     def show_height_popup(self, x, y):
+        """Criar um PopUp que permite a alteração da altura de um tile localizado em determinado {x} e {y}."""
         return HeightPopUpGui(self.screen, self.manager, x, y)
 
 
 
 class TilesetOption:
+    """Classe responsável pela amostra de possiveis tiles para a criação do mapa."""
     def __init__(self, manager, x, y, image, container, id) -> None:
         self.image = image
         self.uibutton = pygame_gui.elements.UIButton(

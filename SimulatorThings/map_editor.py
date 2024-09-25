@@ -11,7 +11,7 @@ from Config import Config
 
 
 class MapMaker:
-
+    """Ambiente responsavel pela criação de novos mapas de simulação"""
     def __init__(
         self, map=None
     ) -> (
